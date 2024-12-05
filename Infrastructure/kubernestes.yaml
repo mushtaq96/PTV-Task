@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: street-service
+spec:
+  replicas: 3  # defines the number of replicas
+  selector:
+    matchLabels:
+      app: street-service
+  template:
+    metadata:
+      labels:
+        app: street-service
+    spec:
+      containers:
+      - name: street-service
+        image: street-service:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: street-service
+spec:
+  selector:
+    app: street-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

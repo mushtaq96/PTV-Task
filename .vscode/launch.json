@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "type": "coreclr",
+            "request": "launch",
+            "name": "Launch ASP.NET Core App",
+            "program": "${workspaceFolder}/StreetService/bin/Debug/net8.0/${input:programName}.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/StreetService",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "requireExactSource": false
+        }
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "programName",
+            "description": "Name of the DLL to launch"
+        }
+    ]
+}
