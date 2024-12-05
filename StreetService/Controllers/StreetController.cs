@@ -12,6 +12,8 @@ using Microsoft.FeatureManagement;
 
 namespace StreetService.Controllers
 {
+    // This controller handles HTTP requests for managing street data.
+    // It includes endpoints for creating, modifying, and deleting streets.
     [ApiController]
     [Route("api/[controller]")]
     public class StreetsController : ControllerBase
@@ -24,7 +26,10 @@ namespace StreetService.Controllers
             _context = context;
             _featureManager = featureManager;
         }
-
+        
+        // POST api/streets
+        // Creates a new street.
+        // Validates the input, sanitizes the name, and ensures the geometry is in a valid WKT format.
         [HttpPost]
         public async Task<ActionResult<Street>> CreateStreet([FromBody] Street street)
         {
@@ -71,6 +76,8 @@ namespace StreetService.Controllers
             }
         }
         
+        // DELETE api/streets/{id}
+        // Deletes a street by its ID.
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStreet(int id)
         {
@@ -88,6 +95,9 @@ namespace StreetService.Controllers
             return NoContent();
         }
 
+        // POST api/streets/modify
+        // Modifies an existing street by adding a point to its geometry.
+        // Handles race conditions and uses a feature flag to decide whether to perform the operation on the database level or within the backend code.
         [HttpPost("modify")]
         public async Task<ActionResult<Street>> ModifyStreet([FromBody] ModifyStreetRequest request)
         {
@@ -155,6 +165,7 @@ namespace StreetService.Controllers
             return street;
         }
 
+        // Sanitizes the input string by trimming, normalizing whitespace, and removing non-alphanumeric characters.
         private string SanitizeString(string input)
         {
             // Remove leading/trailing whitespace
